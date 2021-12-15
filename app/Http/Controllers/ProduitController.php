@@ -57,7 +57,13 @@ class ProduitController extends Controller
         $photo = $request->file('photo');
         $profile_photo_pathName = time() . '.' . $photo->extension();
         $photo->move('images', $profile_photo_pathName);
-        Produit::create($request->all());
+        Produit::create([
+            'photo' => $profile_photo_pathName,
+            'nom_de_produit' => $request->nom_de_produit,
+            'prix' => $request->prix,
+            'description_produit' => $request->description_produit,
+            'category_type'=> $request->category_type,
+        ]);
 
         return redirect()->route('produit.index')
             ->with('success', 'Produit créée avec succès.');
